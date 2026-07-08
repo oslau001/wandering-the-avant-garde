@@ -17,8 +17,9 @@
     /* Typography */
     --body-font: Helvetica, Arial, sans-serif;
 
-    --body-size: 14px;
-    --body-line-height: 1.3;
+--body-size: 14px;
+--body-line-height: 18px;
+--baseline: 18px;
 
     --caption-size: 10px;
     --caption-line-height: 1.25;
