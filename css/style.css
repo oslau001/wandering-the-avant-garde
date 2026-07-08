@@ -34,7 +34,11 @@
        --image-gap: 4px;
     --large-image-gap: 6px;
 
+      --empty-panel-width: 300px;
+
 }
+
+
 
 
 /* ==========================================================
@@ -93,6 +97,16 @@ body {
 .panel-wide {
     flex: 0 0 var(--wide-panel-width);
 }
+
+
+.empty-panel {
+  flex: 0 0 var(--empty-panel-width);
+  height: 100vh;
+  padding: var(--page-padding);
+}
+
+
+
 
 
 /* ==========================================================
@@ -304,6 +318,10 @@ body {
 
 .image-panel.large .caption {
   width: 100%;
+}
+
+.empty-panel {
+  display: none;
 }
 
   
