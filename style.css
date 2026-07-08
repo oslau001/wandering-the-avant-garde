@@ -1,0 +1,292 @@
+/* ==========================================================
+   VARIABLES
+========================================================== */
+
+:root {
+
+    /* Layout */
+    --panel-width: 420px;
+    --large-panel-width: 840px;
+    --wide-panel-width: 800px;
+
+    --column-width: 380px;
+    --column-gap: 40px;
+
+    --page-padding: 24px;
+
+    /* Typography */
+    --body-font: Helvetica, Arial, sans-serif;
+
+    --body-size: 14px;
+    --body-line-height: 1.3;
+
+    --caption-size: 10px;
+    --caption-line-height: 1.25;
+
+   --text-color: rgb(0, 70, 255);
+     --link-color: rgb(0, 70, 255);
+
+}
+
+
+/* ==========================================================
+   RESET
+========================================================== */
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background: #f5f3ef;
+    font-family: var(--body-font);
+}
+
+
+/* ==========================================================
+   HORIZONTAL LAYOUT
+========================================================== */
+
+.track {
+  display: flex;
+  align-items: stretch;
+
+  width: 100vw;
+  height: 100vh;
+
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+
+/* ==========================================================
+   PANELS
+========================================================== */
+
+.panel {
+
+    flex: 0 0 var(--panel-width);
+
+    height: 100vh;
+
+    padding: var(--page-padding);
+
+}
+
+.large {
+
+    flex-basis: var(--large-panel-width);
+
+}
+
+.panel-wide {
+    flex: 0 0 var(--wide-panel-width);
+}
+
+
+/* ==========================================================
+   TEXT
+========================================================== */
+
+.text-block {
+
+    flex: 0 0 auto;
+
+    height: 100vh;
+
+    padding: var(--page-padding);
+
+}
+
+.essay {
+  height: calc(100vh - (var(--page-padding) * 2));
+
+  column-count: 1;
+  column-gap: var(--column-gap);
+  column-fill: auto;
+}
+
+
+
+
+/* ==========================================================
+   IMAGES
+========================================================== */
+
+.image-panel {
+
+    display: flex;
+    flex-direction: column;
+
+}
+
+.image-panel img {
+
+    width: 100%;
+
+    height: auto;
+
+    display: block;
+
+    margin-bottom: 6px;
+
+}
+
+.image-panel.large {
+  flex: 0 0 auto;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.image-panel.large img {
+  width: auto;
+  max-width: 100%;
+
+  height: auto;
+  max-height: calc(100vh - (var(--page-padding) * 2) - 20px);
+
+  object-fit: contain;
+
+  margin-bottom: 6px;
+}
+
+
+/* ==============================================================================================================================================================================
+   MOBILE
+==============================================================================================================================================================================  */
+
+@media (max-width: 768px) {
+
+  :root {
+
+    /* Layout */
+
+    --page-padding: 12px;
+
+    /* Typography */
+
+    --body-size: 16.5px;
+  --body-line-height: 1.36;
+
+    --caption-size: 12.5px;
+    --caption-line-height: 1.3;
+
+  }
+
+  /* ----------------------------------------------------------
+     LAYOUT
+  ---------------------------------------------------------- */
+
+  .track {
+    display: block;
+
+    width: 100%;
+    height: auto;
+
+    overflow: visible;
+  }
+
+  .panel,
+  .text-block {
+
+    width: 100% !important;
+    height: auto;
+    min-height: auto;
+
+    padding: var(--page-padding);
+
+  }
+
+  /* ----------------------------------------------------------
+     TEXT
+  ---------------------------------------------------------- */
+
+  .essay {
+
+    width: 100%;
+    height: auto;
+
+    columns: 1;
+    column-width: auto;
+    column-gap: 0;
+
+  }
+
+  .essay p {
+
+    width: 100%;
+    max-width: 36em;
+
+    font-size: var(--body-size);
+    line-height: var(--body-line-height);
+
+    margin: 0 0 var(--space-4) 0;
+
+    text-wrap: pretty;
+
+  }
+
+  .essay blockquote {
+
+  margin: var(--space-4) 0;
+  padding-left: 1.5em;
+
+  font-size: var(--body-size);
+  line-height: var(--body-line-height);
+
+}
+
+  /* ----------------------------------------------------------
+     IMAGES
+  ---------------------------------------------------------- */
+
+  .image-panel.large {
+
+    flex-basis: auto;
+    width: 100%;
+
+  }
+
+  .image-panel img {
+
+    width: 100%;
+    height: auto;
+
+    margin-bottom: var(--space-1);
+
+  }
+
+.image-panel.large img {
+  width: 100%;
+  max-width: 100%;
+
+  height: auto;
+  max-height: none;
+
+  margin-bottom: var(--space-1);
+}
+
+.image-panel.large .caption {
+  width: 100%;
+}
+
+  
+
+  /* ----------------------------------------------------------
+     CAPTIONS
+  ---------------------------------------------------------- */
+
+  .caption {
+
+    margin: 0;
+
+    font-size: var(--caption-size);
+    line-height: var(--caption-line-height);
+
+  }
+
+}
