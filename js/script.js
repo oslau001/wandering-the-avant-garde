@@ -24,24 +24,17 @@ function resizeTextBlocks() {
     let columns = 1;
 
     while (columns < 50) {
-      const contentWidth =
-        columns * columnWidth + (columns - 1) * columnGap;
-
+      const contentWidth = columns * columnWidth + (columns - 1) * columnGap;
       const totalWidth = contentWidth + pagePadding * 2;
 
       textBlock.style.width = totalWidth + "px";
       textBlock.style.flexBasis = totalWidth + "px";
       essay.style.columnCount = columns;
 
-      const fitsVertically =
-        essay.scrollHeight <= essay.clientHeight + 1;
+      const fitsVertically = essay.scrollHeight <= essay.clientHeight + 1;
+      const fitsHorizontally = essay.scrollWidth <= essay.clientWidth + 1;
 
-      const fitsHorizontally =
-        essay.scrollWidth <= essay.clientWidth + 1;
-
-      if (fitsVertically && fitsHorizontally) {
-        break;
-      }
+      if (fitsVertically && fitsHorizontally) break;
 
       columns++;
     }
@@ -53,15 +46,28 @@ window.addEventListener("resize", resizeTextBlocks);
 
 
 /* ==========================================================
+   SCROLL HELPERS
+========================================================== */
+
+function getScrollX() {
+  return window.scrollX || document.documentElement.scrollLeft;
+}
+
+function setScrollX(x) {
+  window.scrollTo(x, window.scrollY);
+}
+
+function getTargetX(element) {
+  return element.getBoundingClientRect().left + getScrollX();
+}
+
+
+/* ==========================================================
    SCROLL ANIMATION
 ========================================================== */
 
-const track = document.querySelector(".track");
-
-function animateTrackTo(end) {
-  if (!track) return;
-
-  const start = track.scrollLeft;
+function animateToX(end) {
+  const start = getScrollX();
   const distance = Math.abs(end - start);
 
   const duration = Math.min(
@@ -81,7 +87,7 @@ function animateTrackTo(end) {
     const progress = Math.min((time - startTime) / duration, 1);
     const eased = easeInOutCubic(progress);
 
-    track.scrollLeft = start + (end - start) * eased;
+    setScrollX(start + (end - start) * eased);
 
     if (progress < 1) {
       requestAnimationFrame(animate);
@@ -111,7 +117,7 @@ document.querySelectorAll('a[href^="#"]').forEach(link => {
       return;
     }
 
-    animateTrackTo(target.offsetLeft);
+    animateToX(getTargetX(target));
   });
 });
 
@@ -122,8 +128,6 @@ document.querySelectorAll('a[href^="#"]').forEach(link => {
 
 document.addEventListener("keydown", (e) => {
   if (window.innerWidth <= 768) return;
-  if (!track) return;
-
   if (e.key !== "ArrowRight" && e.key !== "ArrowLeft") return;
 
   e.preventDefault();
@@ -131,20 +135,17 @@ document.addEventListener("keydown", (e) => {
   const textBlocks = Array.from(document.querySelectorAll(".text-block"));
   if (textBlocks.length === 0) return;
 
-  const currentScroll = track.scrollLeft;
+  const currentScroll = getScrollX();
 
-  let currentIndex = textBlocks.findIndex((block, index) => {
-    const nextBlock = textBlocks[index + 1];
+  const positions = textBlocks.map(block => getTargetX(block));
 
-    if (!nextBlock) {
-      return currentScroll >= block.offsetLeft;
+  let currentIndex = 0;
+
+  positions.forEach((pos, index) => {
+    if (currentScroll >= pos - 10) {
+      currentIndex = index;
     }
-
-    return currentScroll >= block.offsetLeft &&
-           currentScroll < nextBlock.offsetLeft;
   });
-
-  if (currentIndex === -1) currentIndex = 0;
 
   let targetIndex = currentIndex;
 
@@ -156,7 +157,5 @@ document.addEventListener("keydown", (e) => {
     targetIndex = Math.max(currentIndex - 1, 0);
   }
 
-  const target = textBlocks[targetIndex];
-
-  animateTrackTo(target.offsetLeft);
+  animateToX(positions[targetIndex]);
 });
