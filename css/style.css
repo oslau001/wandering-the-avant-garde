@@ -4,6 +4,10 @@
 
 :root {
 
+  --image-offset: 1px;
+  --large-image-caption-space: 14.5px;
+  
+
     /* Layout */
     --panel-width: 420px;
     --large-panel-width: 840px;
@@ -26,6 +30,9 @@
 
    --text-color: rgb(0, 70, 255);
      --link-color: rgb(0, 70, 255);
+
+       --image-gap: 4px;
+    --large-image-gap: 6px;
 
 }
 
@@ -119,6 +126,9 @@ body {
 /* ==========================================================
    IMAGES
 ========================================================== */
+.image-panel {
+    padding-top: calc(var(--page-padding) + var(--image-offset));
+}
 
 .image-panel {
 
@@ -149,16 +159,32 @@ body {
 }
 
 .image-panel.large img {
+
   width: auto;
   max-width: 100%;
 
   height: auto;
-  max-height: calc(100vh - (var(--page-padding) * 2) - 20px);
+
+  max-height: calc(
+    100vh
+    - (var(--page-padding) * 2)
+    - var(--large-image-caption-space)
+  );
 
   object-fit: contain;
 
-  margin-bottom: 6px;
+  margin-bottom: var(--image-gap);
+
 }
+
+.image-panel img {
+    margin-bottom: var(--image-gap);
+}
+
+.image-panel.large img {
+    margin-bottom: var(--large-image-gap);
+}
+
 
 
 /* ==============================================================================================================================================================================
