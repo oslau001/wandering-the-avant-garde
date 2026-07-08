@@ -107,7 +107,10 @@ body {
   column-count: 1;
   column-gap: var(--column-gap);
   column-fill: auto;
+
+    margin-top: -1px;
 }
+
 
 
 
