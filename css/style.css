@@ -52,7 +52,9 @@ body {
   display: flex;
   align-items: stretch;
 
-  width: 100vw;
+  width: max-content;
+  min-width: 100vw;
+
   height: 100vh;
 
   overflow-x: auto;

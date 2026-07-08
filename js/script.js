@@ -12,22 +12,34 @@ function resizeTextBlocks() {
 
     if (window.innerWidth <= 768) {
       textBlock.style.width = "";
+      textBlock.style.flexBasis = "";
       essay.style.columnCount = "";
       return;
     }
 
+    textBlock.style.width = "";
+    textBlock.style.flexBasis = "";
+    essay.style.columnCount = 1;
+
     let columns = 1;
 
-    while (columns < 20) {
+    while (columns < 50) {
       const contentWidth =
         columns * columnWidth + (columns - 1) * columnGap;
 
       const totalWidth = contentWidth + pagePadding * 2;
 
       textBlock.style.width = totalWidth + "px";
+      textBlock.style.flexBasis = totalWidth + "px";
       essay.style.columnCount = columns;
 
-      if (essay.scrollHeight <= essay.clientHeight + 1) {
+      const fitsVertically =
+        essay.scrollHeight <= essay.clientHeight + 1;
+
+      const fitsHorizontally =
+        essay.scrollWidth <= essay.clientWidth + 1;
+
+      if (fitsVertically && fitsHorizontally) {
         break;
       }
 
